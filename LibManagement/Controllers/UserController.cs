@@ -62,7 +62,7 @@ namespace LibManagement.Controllers
             }
             return BadRequest();
         }
-        [HttpPost]
+        [HttpPost("login")]
         public IActionResult Login(User user)
         {
             ClaimsIdentity identity = null;
@@ -86,7 +86,7 @@ namespace LibManagement.Controllers
             return BadRequest();
 
         }
-        [HttpPost]
+        [HttpPost("logout")]
         public async System.Threading.Tasks.Task<IActionResult> LogoutAsync()
         {
             await HttpContext.SignOutAsync(

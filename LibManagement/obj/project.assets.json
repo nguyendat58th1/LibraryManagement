@@ -7586,11 +7586,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ASUS\\OneDrive\\Desktop\\LibManagement\\LibManagement.csproj",
+      "projectUniqueName": "C:\\Users\\ASUS\\OneDrive\\Documents\\GitHub\\LibraryManagement\\LibManagement\\LibManagement.csproj",
       "projectName": "LibManagement",
-      "projectPath": "C:\\Users\\ASUS\\OneDrive\\Desktop\\LibManagement\\LibManagement.csproj",
+      "projectPath": "C:\\Users\\ASUS\\OneDrive\\Documents\\GitHub\\LibraryManagement\\LibManagement\\LibManagement.csproj",
       "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ASUS\\OneDrive\\Desktop\\LibManagement\\obj\\",
+      "outputPath": "C:\\Users\\ASUS\\OneDrive\\Documents\\GitHub\\LibraryManagement\\LibManagement\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
