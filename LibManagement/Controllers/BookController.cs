@@ -14,46 +14,55 @@ namespace LibManagement.Controllers
     public class BookController : ControllerBase
     {
         private IBookService _bookservice;
-        public BookController (IBookService bookService)
+        public BookController(IBookService bookService)
         {
             _bookservice = bookService;
         }
         [HttpGet]
-        [Authorize(Roles="Admin,User")]
+        [Authorize(Roles = "Admin,User")]
         public ActionResult<IEnumerable<Book>> Get()
         {
-           return  _bookservice.GetAll();
+            return _bookservice.GetAll();
+        }
+        [HttpGet("{id}")]
+        [Authorize(Roles = "Admin,User")]
+        public ActionResult<Book> Get(int id)
+        {
+            return _bookservice.GetById(id);
         }
 
 
         [HttpPost]
-        [Authorize(Roles="Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Post(Book book)
         {
-            if(_bookservice.Create(book)) {
+            if (_bookservice.Create(book))
+            {
                 return Ok();
             }
             return BadRequest();
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles="Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Put(int id, Book book)
         {
-           if( _bookservice.Update(book)) {
-               return Ok();
-           }
-           return BadRequest();
+            if (_bookservice.Update(book))
+            {
+                return Ok();
+            }
+            return BadRequest();
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles="Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
-           if( _bookservice.Delete(id)) {
-               return Ok();
-           }
-           return BadRequest();
+            if (_bookservice.Delete(id))
+            {
+                return Ok();
+            }
+            return BadRequest();
         }
     }
 }

@@ -14,6 +14,8 @@ namespace LibManagement.Services
         bool Update(T entity);
         //delete entity
         bool Delete(int id);
+        //get entity by id
+        T GetById(int id);
 
     }
 }

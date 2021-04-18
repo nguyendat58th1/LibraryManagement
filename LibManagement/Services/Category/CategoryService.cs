@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LibManagement.Model;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore; 
+using Microsoft.EntityFrameworkCore;
 
 namespace LibManagement.Services
 {
@@ -15,7 +15,7 @@ namespace LibManagement.Services
         {
             _context = context;
         }
-        public  bool Create(Category category)
+        public bool Create(Category category)
         {
             try
             {
@@ -23,14 +23,10 @@ namespace LibManagement.Services
                 _context.SaveChanges();
                 return true;
             }
-            catch 
-            {   
+            catch
+            {
                 return false;
             }
-
-
-
-
         }
 
         public bool Delete(int id)
@@ -43,7 +39,7 @@ namespace LibManagement.Services
                 return true;
 
             }
-            catch 
+            catch
             {
                 return false;
             }
@@ -55,6 +51,11 @@ namespace LibManagement.Services
             return _context.Categories.Include(x => x.Books).ToList();
         }
 
+        public Category GetById(int id)
+        {
+            return _context.Categories.Find(id);
+        }
+
         public bool Update(Category category)
         {
             try
@@ -64,9 +65,9 @@ namespace LibManagement.Services
                 item.CategoryName = category.CategoryName;
                 _context.SaveChanges();
                 return true;
-           
+
             }
-            catch 
+            catch
             {
                 return false;
             }

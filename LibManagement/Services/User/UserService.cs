@@ -33,9 +33,6 @@ namespace LibManagement.Services
                 return false;
             }
 
-
-
-
         }
 
         public bool Delete(int id)
@@ -58,6 +55,11 @@ namespace LibManagement.Services
         public List<User> GetAll()
         {
             return _context.Users.Include(x=>x.BookBorrowingRequests).ToList();
+        }
+
+        public User GetById(int id) 
+        {
+            return _context.Users.Find(id);
         }
 
         public bool Update(User user)

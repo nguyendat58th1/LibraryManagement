@@ -27,12 +27,6 @@ namespace LibManagement.Services
             {
                 return false;
             }
-
-
-
-
-
-
         }
 
         public bool Delete(int id)
@@ -55,6 +49,11 @@ namespace LibManagement.Services
         public List<Book> GetAll()
         {
             return _context.Books.Include(x => x).ToList();
+        }
+
+        public Book GetById(int id)
+        {
+            return _context.Books.Find(id);
         }
 
         public bool Update(Book book)

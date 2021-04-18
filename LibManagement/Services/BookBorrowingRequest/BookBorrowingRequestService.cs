@@ -18,7 +18,9 @@ namespace LibManagement.Services
         {
             try
             {
-                if (_context.BookBorrowRequestDetails.Count() > 5)
+                var checkMonth = _context.BookBorrowingRequests.Count(x=> x.RequestUserId == bbr.RequestUserId 
+                && x.DateRequest.Month == DateTime.Now.Month &&  x.DateRequest.Year == DateTime.Now.Year);
+                if (_context.BookBorrowRequestDetails.Count() > 5 || checkMonth > 3)
                 {
                     return false;
                 }
@@ -58,6 +60,10 @@ namespace LibManagement.Services
             return _context.BookBorrowingRequests.Include(x => x.BookBorrowRequestDetails).ToList();
         }
 
+        public BookBorrowingRequest GetById(int id) 
+        {
+            return _context.BookBorrowingRequests.Find(id);
+        }
         public bool Update(BookBorrowingRequest bbr)
         {
             try

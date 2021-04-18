@@ -53,6 +53,10 @@ namespace LibManagement.Services
             return _context.BookBorrowRequestDetails.ToList();
         }
 
+        public BookBorrowingRequestDetail GetById(int id) 
+        {
+            return _context.BookBorrowRequestDetails.Find(id);
+        }
         public bool Update(BookBorrowingRequestDetail brrd)
         {
             try

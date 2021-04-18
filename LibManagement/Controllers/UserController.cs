@@ -24,9 +24,17 @@ namespace LibManagement.Controllers
             _context = context;
         }
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult<IEnumerable<User>> Get()
         {
             return _userService.GetAll();
+        }
+
+        [HttpGet("{id}")]
+        [Authorize(Roles = "Admin")]
+        public ActionResult<User> Get(int id)
+        {
+            return _userService.GetById(id);
         }
 
 
@@ -63,6 +71,7 @@ namespace LibManagement.Controllers
             return BadRequest();
         }
         [HttpPost("login")]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult Login(User user)
         {
             ClaimsIdentity identity = null;
@@ -87,6 +96,7 @@ namespace LibManagement.Controllers
 
         }
         [HttpPost("logout")]
+        [Authorize(Roles = "Admin,User")]
         public async System.Threading.Tasks.Task<IActionResult> LogoutAsync()
         {
             await HttpContext.SignOutAsync(
