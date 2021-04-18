@@ -19,7 +19,7 @@ namespace LibManagement.Controllers
             _bookservice = bookService;
         }
         [HttpGet]
-        [Authorize(Roles = "Admin,User")]
+        //[Authorize(Roles = "Admin,User")]
         public ActionResult<IEnumerable<Book>> Get()
         {
             return _bookservice.GetAll();

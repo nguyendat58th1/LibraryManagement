@@ -48,7 +48,7 @@ namespace LibManagement.Services
 
         public List<Book> GetAll()
         {
-            return _context.Books.Include(x => x).ToList();
+            return _context.Books.Include(x => x.BookBorrowingRequestDetails).ToList();
         }
 
         public Book GetById(int id)
@@ -63,6 +63,7 @@ namespace LibManagement.Services
                 var item = _context.Books.FirstOrDefault(x => x.BookId == book.BookId);
                 item.BookId = book.BookId;
                 item.Title = book.Title;
+                item.Image = book.Image;
                 item.Description = book.Description;
                 item.CategoryId = book.CategoryId;
                 _context.SaveChanges();

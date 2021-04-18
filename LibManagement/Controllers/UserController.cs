@@ -71,7 +71,6 @@ namespace LibManagement.Controllers
             return BadRequest();
         }
         [HttpPost("login")]
-        [Authorize(Roles = "Admin,User")]
         public IActionResult Login(User user)
         {
             ClaimsIdentity identity = null;
@@ -96,7 +95,7 @@ namespace LibManagement.Controllers
 
         }
         [HttpPost("logout")]
-        [Authorize(Roles = "Admin,User")]
+
         public async System.Threading.Tasks.Task<IActionResult> LogoutAsync()
         {
             await HttpContext.SignOutAsync(
