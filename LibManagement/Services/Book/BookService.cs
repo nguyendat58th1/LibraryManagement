@@ -63,6 +63,7 @@ namespace LibManagement.Services
                 var item = _context.Books.FirstOrDefault(x => x.BookId == book.BookId);
                 item.BookId = book.BookId;
                 item.Title = book.Title;
+                item.Author = book.Author;
                 item.Image = book.Image;
                 item.Description = book.Description;
                 item.CategoryId = book.CategoryId;

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LibManagement.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibManagement.Model
@@ -19,7 +20,7 @@ namespace LibManagement.Model
         public DbSet<BookBorrowingRequest> BookBorrowingRequests { get; set; }
         public DbSet<BookBorrowingRequestDetail> BookBorrowRequestDetails { get; set; }
         public DbSet<User> Users { get; set; }
-        
+
         protected override void OnConfiguring(DbContextOptionsBuilder option)
         {
             option.UseSqlServer("Server = LAPTOP-O71PKJ1L\\SQLEXPRESS;Database = Library;Trusted_Connection=True;MultipleActiveResultSets= true");
@@ -35,7 +36,7 @@ namespace LibManagement.Model
             builder.Entity<User>()
             .Property(f => f.UserId)
             .ValueGeneratedOnAdd();
-           
+
             builder.Entity<BookBorrowingRequest>()
            .Property(f => f.RequestId)
            .ValueGeneratedOnAdd();
@@ -44,8 +45,13 @@ namespace LibManagement.Model
           .ValueGeneratedOnAdd();
             base.OnModelCreating(builder);
 
+            builder.Entity<BookBorrowingRequest>()
+            .Property(b => b.Status)
+            .HasDefaultValue((Status)0);
+
             builder.Entity<Category>().HasData(new Category
-            {   CategoryId = 2,
+            {
+                CategoryId = 2,
                 CategoryName = "Math"
 
             });
@@ -55,15 +61,33 @@ namespace LibManagement.Model
                 CategoryName = "Sciene"
 
             });
-              builder.Entity<Book>().HasData(new Book
+            builder.Entity<Book>().HasData(new Book
             {
                 BookId = 1,
                 Title = "ABC",
                 Description = "Abc",
                 CategoryId = 1
-
             });
-          
+            
+            builder.Entity<User>().HasData(new User
+            {
+                UserId = 1,
+                Username = "admin",
+                Password = "123",
+                DoB = DateTime.Now.AddYears(-20),
+                Name = "Nguyen Van A",
+                Role = (Role)0
+            });
+            builder.Entity<User>().HasData(new User
+            {
+                UserId = 2,
+                Username = "user",
+                Password = "123",
+                DoB = DateTime.Now.AddYears(-30),
+                Name = "Nguyen Van B",
+                Role = (Role)1
+            });
+
         }
 
     }

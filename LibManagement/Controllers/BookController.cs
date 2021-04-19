@@ -25,7 +25,8 @@ namespace LibManagement.Controllers
             return _bookservice.GetAll();
         }
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin,User")]
+      
+        //[Authorize(Roles = "Admin,User")]
         public ActionResult<Book> Get(int id)
         {
             return _bookservice.GetById(id);
@@ -33,7 +34,7 @@ namespace LibManagement.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        // [Authorize(Roles = "Admin")]
         public IActionResult Post(Book book)
         {
             if (_bookservice.Create(book))

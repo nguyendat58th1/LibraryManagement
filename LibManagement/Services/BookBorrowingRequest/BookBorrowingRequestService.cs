@@ -20,7 +20,7 @@ namespace LibManagement.Services
             {
                 var checkMonth = _context.BookBorrowingRequests.Count(x=> x.RequestUserId == bbr.RequestUserId 
                 && x.DateRequest.Month == DateTime.Now.Month &&  x.DateRequest.Year == DateTime.Now.Year);
-                if (_context.BookBorrowRequestDetails.Count() > 5 || checkMonth > 3)
+                if (_context.BookBorrowRequestDetails.Count(x=>x.RequestId == bbr.RequestId) > 5 || checkMonth > 3)
                 {
                     return false;
                 }

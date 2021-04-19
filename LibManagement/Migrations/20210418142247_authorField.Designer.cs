@@ -4,14 +4,16 @@ using LibManagement.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LibManagement.Migrations
 {
     [DbContext(typeof(LibraryDBContext))]
-    partial class LibraryDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210418142247_authorField")]
+    partial class authorField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,26 +171,6 @@ namespace LibManagement.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = 1,
-                            DoB = new DateTime(2001, 4, 19, 10, 27, 43, 457, DateTimeKind.Local).AddTicks(5293),
-                            Name = "Nguyen Van A",
-                            Password = "123",
-                            Role = 0,
-                            Username = "admin"
-                        },
-                        new
-                        {
-                            UserId = 2,
-                            DoB = new DateTime(1991, 4, 19, 10, 27, 43, 458, DateTimeKind.Local).AddTicks(4803),
-                            Name = "Nguyen Van B",
-                            Password = "123",
-                            Role = 1,
-                            Username = "user"
-                        });
                 });
 
             modelBuilder.Entity("LibManagement.Model.Book", b =>

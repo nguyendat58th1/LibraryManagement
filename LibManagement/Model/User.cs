@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System;
 using System.ComponentModel.DataAnnotations;
 using LibManagement.Enums;
+using System.Text.Json.Serialization;
+using System.Runtime.Serialization;
 
 namespace LibManagement.Model
 {
@@ -17,7 +19,9 @@ namespace LibManagement.Model
         public DateTime DoB {get; set;}
         [Required]
         public Role Role {get; set;}
-      
+
+      [JsonIgnore]
+      [IgnoreDataMember]
         public virtual ICollection<BookBorrowingRequest> BookBorrowingRequests {get; set;}
     }
 }

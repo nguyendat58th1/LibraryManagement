@@ -21,6 +21,8 @@ namespace LibManagement
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -31,6 +33,17 @@ namespace LibManagement
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("http://localhost:3000")
+                                                              .AllowAnyHeader()
+                                                        .AllowAnyMethod();
+                                  });
+            });
+
             services.AddDbContext<LibraryDBContext>(opts =>
             opts.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("sqlConnection")));
             services.AddTransient<IBookService, BookService>();
@@ -68,6 +81,8 @@ namespace LibManagement
             app.UseCookiePolicy();
             app.UseHttpsRedirection();
             app.UseAuthentication();
+            app.UseCors(MyAllowSpecificOrigins);
+
 
             app.UseAuthorization();
 
