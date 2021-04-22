@@ -4,7 +4,7 @@ namespace LibManagement.Services
 {
     public interface IBookBorrowingRequestService : IHandler<BookBorrowingRequest>
     {
-        public bool CreateRequest(int userId , List<int> bookIds);
+        bool CreateRequest(int userId , List<int> bookIds);
      
     }
 }
