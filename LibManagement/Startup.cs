@@ -39,25 +39,30 @@ namespace LibManagement
                                   builder =>
                                   {
                                       builder.WithOrigins("http://localhost:3000")
-                                                              .AllowAnyHeader()
-                                                        .AllowAnyMethod();
+                                                            .AllowAnyHeader()
+                                                            .AllowAnyMethod();
                                   });
             });
 
+           // services.AddSession();
+           // services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddDbContext<LibraryDBContext>(opts =>
-            opts.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("sqlConnection")));
+                                                    opts.UseLazyLoadingProxies()
+                                                        .UseSqlServer(Configuration.GetConnectionString("sqlConnection")));
             services.AddTransient<IBookService, BookService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IBookBorrowingRequestService, BookBorrowingRequestService>();
             services.AddTransient<IBBRDService, BBRDService>();
             services.AddControllers()
-                    .AddNewtonsoftJson(opts => opts.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+                    .AddNewtonsoftJson(opts =>
+                                       opts.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LibManagement", Version = "v1" });
             });
-            services.Configure<CookiePolicyOptions>(option => 
+            services.Configure<CookiePolicyOptions>(option =>
             {
                 option.CheckConsentNeeded = context => true;
                 option.MinimumSameSitePolicy = SameSiteMode.None;
@@ -76,14 +81,12 @@ namespace LibManagement
             }
 
             app.UseHttpsRedirection();
-
+           // app.UseSession();
             app.UseRouting();
             app.UseCookiePolicy();
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseCors(MyAllowSpecificOrigins);
-
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

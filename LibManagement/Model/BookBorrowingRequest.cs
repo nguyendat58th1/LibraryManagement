@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using LibManagement.Enums;
 
 namespace LibManagement.Model
@@ -26,6 +28,8 @@ namespace LibManagement.Model
         public  int? RejectUserId {get; set;}
         [NotMapped]
         public virtual User RejectUser {get; set;}
+        [JsonIgnore]
+        [IgnoreDataMember]
         public virtual ICollection<BookBorrowingRequestDetail> BookBorrowRequestDetails {get; set;}
 
         

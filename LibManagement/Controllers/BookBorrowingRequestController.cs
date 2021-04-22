@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LibManagement.Enums;
 using LibManagement.Model;
 using LibManagement.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibManagement.Controllers
@@ -14,9 +16,12 @@ namespace LibManagement.Controllers
     public class BookBorrowingRequestController : ControllerBase
     {
         private IBookBorrowingRequestService _brr;
-        public BookBorrowingRequestController(IBookBorrowingRequestService brr)
+        private IBBRDService _brrd;
+        public BookBorrowingRequestController(IBookBorrowingRequestService brr, IBBRDService brrd)
         {
             _brr = brr;
+            _brrd = brrd;
+
         }
         [HttpGet]
         [Authorize(Roles = "Admin,User")]
@@ -35,23 +40,71 @@ namespace LibManagement.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin,User")]
-        public void Post(BookBorrowingRequest brr)
+        public IActionResult Post(int userId, List<int> bookIds)
         {
-            _brr.Create(brr);
+            if (_brr.CreateRequest(userId,bookIds))
+            {  
+                return Ok();
+            }
+            return BadRequest();
         }
 
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
-        public void Put(int id, BookBorrowingRequest brr)
+        public IActionResult Put(int id, BookBorrowingRequest brr)
         {
-            _brr.Update(brr);
+            id = brr.RequestId;
+            if (_brr.Update(brr))
+            {
+                return Ok();
+            }
+            return BadRequest();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPut("{id}/approve")]
+        public IActionResult ApproveBorrowRequest(int id,int userId)
+        {
+            var entity = _brr.GetById(id); 
+
+            if (entity != null)
+            {
+                //entity.ApprovalUserId = Int32.Parse( HttpContext.Session.GetString("userId"));
+                entity.Status = Status.Approve;
+                entity.ApprovalUserId = userId;
+                _brr.Update(entity);
+                return Ok(entity);
+            }
+            return NoContent();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPut("{id}/reject")]
+        public IActionResult RejectBorrowRequest(int id, int userId)
+        {
+            var entity = _brr.GetById(id); 
+
+            if (entity != null)
+            {
+                //entity.RejectUserId = Int32.Parse( HttpContext.Session.GetString("userId"));
+                entity.Status = Status.Rejected;
+                entity.RejectUserId = userId;
+                _brr.Update(entity);
+                return Ok(entity);
+            }
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
-            _brr.Delete(id);
+            if (_brr.Delete(id))
+            {
+                return Ok();
+            }
+            return BadRequest();
+
         }
     }
 }

@@ -52,7 +52,7 @@ namespace LibManagement.Model
             builder.Entity<Category>().HasData(new Category
             {
                 CategoryId = 2,
-                CategoryName = "Math"
+                CategoryName = "Novel"
 
             });
             builder.Entity<Category>().HasData(new Category
@@ -61,13 +61,7 @@ namespace LibManagement.Model
                 CategoryName = "Sciene"
 
             });
-            builder.Entity<Book>().HasData(new Book
-            {
-                BookId = 1,
-                Title = "ABC",
-                Description = "Abc",
-                CategoryId = 1
-            });
+       
             
             builder.Entity<User>().HasData(new User
             {

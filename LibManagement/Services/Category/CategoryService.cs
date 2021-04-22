@@ -61,7 +61,6 @@ namespace LibManagement.Services
             try
             {
                 var item = _context.Categories.FirstOrDefault(x => x.CategoryId == category.CategoryId);
-                item.CategoryId = category.CategoryId;
                 item.CategoryName = category.CategoryName;
                 _context.SaveChanges();
                 return true;

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace LibManagement.Controllers
 {
@@ -53,6 +54,7 @@ namespace LibManagement.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Put(int id, User user)
         {
+            id = user.UserId;
             if (_userService.Update(user))
             {
                 return Ok();
@@ -71,19 +73,24 @@ namespace LibManagement.Controllers
             return BadRequest();
         }
         [HttpPost("login")]
-        public IActionResult Login(User user)
+        public IActionResult Login(LoginModel user)
         {
             ClaimsIdentity identity = null;
             bool isAuthenticate = false;
-            var result = _context.Users.Count(x => x.Username == user.Username && x.Password == user.Password);
-            if (result > 0)
+            var result = _context.Users.Where(x => x.Username == user.Username && x.Password == user.Password).FirstOrDefault();
+            if (result != null)
             {
                 identity = new ClaimsIdentity(new[] {
-                    new Claim(ClaimTypes.Name,_context.Users.Where(x=>x.Username ==user.Username && x.Password == user.Password).Single().Username),
-                    new Claim(ClaimTypes.Role,_context.Users.Where(x=>x.Username ==user.Username && x.Password == user.Password).Single().Role.ToString())
+                    new Claim(ClaimTypes.Name,_context.Users
+                                                      .Where(x=>x.Username ==user.Username && x.Password == user.Password)
+                                                      .Single().Username),
+                    new Claim(ClaimTypes.Role,_context.Users
+                                                      .Where(x=>x.Username ==user.Username && x.Password == user.Password)
+                                                      .Single().Role.ToString())
 
                 }, CookieAuthenticationDefaults.AuthenticationScheme);
                 isAuthenticate = true;
+               // HttpContext.Session.SetString("userId",user.UserId.ToString());
             }
             if (isAuthenticate)
             {
@@ -100,6 +107,7 @@ namespace LibManagement.Controllers
         {
             await HttpContext.SignOutAsync(
             CookieAuthenticationDefaults.AuthenticationScheme);
+            //HttpContext.Session.Remove("userId");
             return Ok();
         }
     }

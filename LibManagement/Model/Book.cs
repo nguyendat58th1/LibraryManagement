@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace LibManagement.Model
 {
@@ -19,6 +21,8 @@ namespace LibManagement.Model
        [Required]
        public int CategoryId {get; set;}
        public virtual Category Category {get; set;}
+       [JsonIgnore]
+       [IgnoreDataMember]
        
        public virtual ICollection<BookBorrowingRequestDetail> BookBorrowingRequestDetails {get; set;}
     }

@@ -44,6 +44,8 @@ namespace LibManagement.Migrations
                     BookId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Author = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -66,7 +68,7 @@ namespace LibManagement.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DateRequest = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ReturnRequest = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     RequestUserId = table.Column<int>(type: "int", nullable: false),
                     ApprovalUserId = table.Column<int>(type: "int", nullable: true),
                     RejectUserId = table.Column<int>(type: "int", nullable: true)
@@ -111,17 +113,20 @@ namespace LibManagement.Migrations
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "CategoryId", "CategoryName" },
-                values: new object[] { 2, "Math" });
+                values: new object[,]
+                {
+                    { 2, "Novel" },
+                    { 1, "Sciene" }
+                });
 
             migrationBuilder.InsertData(
-                table: "Categories",
-                columns: new[] { "CategoryId", "CategoryName" },
-                values: new object[] { 1, "Sciene" });
-
-            migrationBuilder.InsertData(
-                table: "Books",
-                columns: new[] { "BookId", "CategoryId", "Description", "Title" },
-                values: new object[] { 1, 1, "Abc", "ABC" });
+                table: "Users",
+                columns: new[] { "UserId", "DoB", "Name", "Password", "Role", "Username" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2001, 4, 20, 10, 16, 30, 498, DateTimeKind.Local).AddTicks(6981), "Nguyen Van A", "123", 0, "admin" },
+                    { 2, new DateTime(1991, 4, 20, 10, 16, 30, 499, DateTimeKind.Local).AddTicks(7081), "Nguyen Van B", "123", 1, "user" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BookBorrowingRequests_RequestUserId",

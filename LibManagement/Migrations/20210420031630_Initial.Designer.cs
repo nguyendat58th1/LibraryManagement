@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibManagement.Migrations
 {
     [DbContext(typeof(LibraryDBContext))]
-    [Migration("20210416081601_Initial")]
+    [Migration("20210420031630_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,10 +28,16 @@ namespace LibManagement.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Author")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
@@ -43,15 +49,6 @@ namespace LibManagement.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Books");
-
-                    b.HasData(
-                        new
-                        {
-                            BookId = 1,
-                            CategoryId = 1,
-                            Description = "Abc",
-                            Title = "ABC"
-                        });
                 });
 
             modelBuilder.Entity("LibManagement.Model.BookBorrowingRequest", b =>
@@ -77,7 +74,9 @@ namespace LibManagement.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Status")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.HasKey("RequestId");
 
@@ -127,7 +126,7 @@ namespace LibManagement.Migrations
                         new
                         {
                             CategoryId = 2,
-                            CategoryName = "Math"
+                            CategoryName = "Novel"
                         },
                         new
                         {
@@ -163,6 +162,26 @@ namespace LibManagement.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            DoB = new DateTime(2001, 4, 20, 10, 16, 30, 498, DateTimeKind.Local).AddTicks(6981),
+                            Name = "Nguyen Van A",
+                            Password = "123",
+                            Role = 0,
+                            Username = "admin"
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            DoB = new DateTime(1991, 4, 20, 10, 16, 30, 499, DateTimeKind.Local).AddTicks(7081),
+                            Name = "Nguyen Van B",
+                            Password = "123",
+                            Role = 1,
+                            Username = "user"
+                        });
                 });
 
             modelBuilder.Entity("LibManagement.Model.Book", b =>

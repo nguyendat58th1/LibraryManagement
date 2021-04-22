@@ -67,7 +67,6 @@ namespace LibManagement.Services
             try
             {
                 var item = _context.Users.FirstOrDefault(x => x.UserId == user.UserId);
-                item.UserId = user.UserId;
                 item.Username = user.Username;
                 item.DoB = user.DoB;
                 item.Name = user.Name;

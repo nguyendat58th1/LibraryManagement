@@ -47,15 +47,6 @@ namespace LibManagement.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Books");
-
-                    b.HasData(
-                        new
-                        {
-                            BookId = 1,
-                            CategoryId = 1,
-                            Description = "Abc",
-                            Title = "ABC"
-                        });
                 });
 
             modelBuilder.Entity("LibManagement.Model.BookBorrowingRequest", b =>
@@ -133,7 +124,7 @@ namespace LibManagement.Migrations
                         new
                         {
                             CategoryId = 2,
-                            CategoryName = "Math"
+                            CategoryName = "Novel"
                         },
                         new
                         {
@@ -174,7 +165,7 @@ namespace LibManagement.Migrations
                         new
                         {
                             UserId = 1,
-                            DoB = new DateTime(2001, 4, 19, 10, 27, 43, 457, DateTimeKind.Local).AddTicks(5293),
+                            DoB = new DateTime(2001, 4, 20, 10, 16, 30, 498, DateTimeKind.Local).AddTicks(6981),
                             Name = "Nguyen Van A",
                             Password = "123",
                             Role = 0,
@@ -183,7 +174,7 @@ namespace LibManagement.Migrations
                         new
                         {
                             UserId = 2,
-                            DoB = new DateTime(1991, 4, 19, 10, 27, 43, 458, DateTimeKind.Local).AddTicks(4803),
+                            DoB = new DateTime(1991, 4, 20, 10, 16, 30, 499, DateTimeKind.Local).AddTicks(7081),
                             Name = "Nguyen Van B",
                             Password = "123",
                             Role = 1,

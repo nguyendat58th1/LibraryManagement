@@ -75,7 +75,6 @@ namespace LibManagement.Services
             {
                 return false;
             }
-
-        }
+        } 
     }
 }

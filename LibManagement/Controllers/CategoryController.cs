@@ -34,7 +34,7 @@ namespace LibManagement.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public IActionResult Post(Category category)
         {
             if (_categoryservice.Create(category))
@@ -45,7 +45,7 @@ namespace LibManagement.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
+       // [Authorize(Roles = "Admin")]
         public IActionResult Put(int id, Category category)
         {
             id = category.CategoryId;
@@ -58,7 +58,7 @@ namespace LibManagement.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+       // [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             if (_categoryservice.Delete(id))

@@ -62,7 +62,6 @@ namespace LibManagement.Services
             try
             {
                 var item = _context.BookBorrowRequestDetails.FirstOrDefault(x => x.Id == brrd.Id);
-                item.Id = brrd.Id;
                 item.BookId = brrd.BookId;
                 item.RequestId = brrd.RequestId;
                 _context.SaveChanges();
