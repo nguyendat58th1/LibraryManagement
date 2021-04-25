@@ -19,7 +19,7 @@ namespace LibManagement.Controllers
             _categoryservice = categoryService;
         }
         [HttpGet]
-        //[Authorize(Roles = "Admin,User")]
+        //[Authorize(Roles = "Admin")]
         public ActionResult<IEnumerable<Category>> Get()
         {
             return _categoryservice.GetAll();

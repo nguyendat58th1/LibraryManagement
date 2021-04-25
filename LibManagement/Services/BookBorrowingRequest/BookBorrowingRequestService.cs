@@ -29,7 +29,7 @@ namespace LibManagement.Services
                                                                          && x.DateRequest.Month == DateTime.Now.Month
                                                                          && x.DateRequest.Year == DateTime.Now.Year);
 
-                if (bookIds.Count() > 5 || checkMonth > 3)
+                if (bookIds.Count() > 5 || checkMonth > 2)
                 {
                     return false;
                 }
@@ -38,8 +38,7 @@ namespace LibManagement.Services
                     var request = new BookBorrowingRequest {
                         RequestUserId = userId,
                         DateRequest = DateTime.Now,
-                        Status = Status.Waiting
-
+                        Status =  Status.Waiting
                     };
                     _context.BookBorrowingRequests.Add(request);
                     _context.SaveChanges();
@@ -80,6 +79,7 @@ namespace LibManagement.Services
 
         public List<BookBorrowingRequest> GetAll()
         {
+           
             return _context.BookBorrowingRequests.Include(x => x.BookBorrowRequestDetails).ToList();
         }
 
@@ -91,7 +91,7 @@ namespace LibManagement.Services
         {
             try
             {
-                var item = _context.BookBorrowingRequests.FirstOrDefault(x => x.RequestId == bbr.RequestId);
+                var item = _context.BookBorrowingRequests.Find(bbr.RequestId);
                 item.DateRequest = bbr.DateRequest;
                 item.Status = bbr.Status;
                 item.RequestUserId = bbr.RequestUserId;

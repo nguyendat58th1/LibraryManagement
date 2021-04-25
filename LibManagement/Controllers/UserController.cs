@@ -25,7 +25,7 @@ namespace LibManagement.Controllers
             _context = context;
         }
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public ActionResult<IEnumerable<User>> Get()
         {
             return _userService.GetAll();

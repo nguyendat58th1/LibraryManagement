@@ -40,7 +40,7 @@ namespace LibManagement.Controllers
         }
 
         [HttpPost]
-        // [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public IActionResult Post(Book book)
         {
             if (_bookservice.Create(book))

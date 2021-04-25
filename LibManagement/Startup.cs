@@ -67,6 +67,10 @@ namespace LibManagement
                 option.CheckConsentNeeded = context => true;
                 option.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            
+
+
+            
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
         }
 
