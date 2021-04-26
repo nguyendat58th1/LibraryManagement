@@ -108,8 +108,7 @@ namespace LibManagement.Controllers
 
         }
         [HttpPost("logout")]
-
-        public async System.Threading.Tasks.Task<IActionResult> LogoutAsync()
+        public async Task<IActionResult> LogoutAsync()
         {
             await HttpContext.SignOutAsync(
             CookieAuthenticationDefaults.AuthenticationScheme);
