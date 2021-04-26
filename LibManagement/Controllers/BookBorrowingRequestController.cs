@@ -24,21 +24,21 @@ namespace LibManagement.Controllers
 
         }
         [HttpGet]
-        //[Authorize(Roles = "Admin,User")]
+        [Authorize(Roles = "Admin,User")]
         public ActionResult<IEnumerable<BookBorrowingRequest>> Get()
         {
             return _brr.GetAll();
         }
 
         [HttpGet("Admin")]
-        //[Authorize(Roles = "Admin,User")]
+        [Authorize(Roles = "Admin")]
         public ActionResult<IEnumerable<BookBorrowingRequest>> GetForAdmin()
         {
             return _brr.GetAll();
         }
 
         [HttpGet("{id}")]
-        //[Authorize(Roles = "Admin,User")]
+        [Authorize(Roles = "Admin,User")]
         public ActionResult<BookBorrowingRequest> Get(int id)
         {
             return _brr.GetById(id);
@@ -46,7 +46,7 @@ namespace LibManagement.Controllers
 
 
         [HttpPost("{userId}")]
-        //[Authorize(Roles = "Admin,User")]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult Post(int userId, List<int> bookIds)
         {
             if (_brr.CreateRequest(userId,bookIds))
@@ -68,7 +68,7 @@ namespace LibManagement.Controllers
             return BadRequest();
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPut("{userId}/approve/{id}")]
         public IActionResult ApproveBorrowRequest(int id,int userId)
         {
@@ -85,7 +85,7 @@ namespace LibManagement.Controllers
             return NoContent();
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPut("{userId}/reject/{id}/")]
         public IActionResult RejectBorrowRequest(int id, int userId)
         {
@@ -103,7 +103,7 @@ namespace LibManagement.Controllers
         }
 
         [HttpDelete("{id}")]
-       // [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             if (_brr.Delete(id))

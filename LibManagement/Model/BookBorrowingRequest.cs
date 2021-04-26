@@ -28,8 +28,8 @@ namespace LibManagement.Model
         public  int? RejectUserId {get; set;}
         [NotMapped]
         public virtual User RejectUser {get; set;}
-        [JsonIgnore]
-        [IgnoreDataMember]
+        // [JsonIgnore]
+        // [IgnoreDataMember]
         public virtual ICollection<BookBorrowingRequestDetail> BookBorrowRequestDetails {get; set;}
 
         

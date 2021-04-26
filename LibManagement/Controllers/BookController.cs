@@ -19,13 +19,13 @@ namespace LibManagement.Controllers
             _bookservice = bookService;
         }
         [HttpGet]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,User")]
         public ActionResult<IEnumerable<Book>> Get()
         {
             return _bookservice.GetAll();
         }
         [HttpGet("Admin")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult<IEnumerable<Book>> GetForAdmin()
         {
             return _bookservice.GetAll();
@@ -33,14 +33,14 @@ namespace LibManagement.Controllers
         
         [HttpGet("{id}")]
 
-        //[Authorize(Roles = "Admin,User")]
+        [Authorize(Roles = "Admin,User")]
         public ActionResult<Book> Get(int id)
         {
             return _bookservice.GetById(id);
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Post(Book book)
         {
             if (_bookservice.Create(book))
@@ -51,7 +51,7 @@ namespace LibManagement.Controllers
         }
 
         [HttpPut("{id}")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Put(int id, Book book)
         {
             id = book.BookId;
@@ -63,7 +63,7 @@ namespace LibManagement.Controllers
         }
 
         [HttpDelete("{id}")]
-       // [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             if (_bookservice.Delete(id))

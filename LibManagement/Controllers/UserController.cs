@@ -73,7 +73,7 @@ namespace LibManagement.Controllers
             return BadRequest();
         }
         [HttpPost("login")]
-        public IActionResult Login(LoginModel user)
+        public async Task<IActionResult> Login(LoginModel user)
         {
             ClaimsIdentity identity = null;
             bool isAuthenticate = false;
@@ -95,7 +95,13 @@ namespace LibManagement.Controllers
             if (isAuthenticate)
             {
                 var principal = new ClaimsPrincipal(identity);
-                var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                var authProperties = new AuthenticationProperties {
+                    AllowRefresh = true,
+                    ExpiresUtc = DateTimeOffset.Now.AddDays(3),
+                    IsPersistent = false,
+                };
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProperties);
                 return Ok();
             }
             return BadRequest();

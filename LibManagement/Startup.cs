@@ -40,7 +40,8 @@ namespace LibManagement
                                   {
                                       builder.WithOrigins("http://localhost:3000")
                                                             .AllowAnyHeader()
-                                                            .AllowAnyMethod();
+                                                            .AllowAnyMethod()
+                                                            .AllowCredentials();
                                   });
             });
 
@@ -62,16 +63,16 @@ namespace LibManagement
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LibManagement", Version = "v1" });
             });
-            services.Configure<CookiePolicyOptions>(option =>
-            {
-                option.CheckConsentNeeded = context => true;
-                option.MinimumSameSitePolicy = SameSiteMode.None;
-            });
-            
-
-
-            
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+            // services.Configure<CookiePolicyOptions>(option =>
+            // {
+            //     option.CheckConsentNeeded = context => true;
+            //     option.MinimumSameSitePolicy = SameSiteMode.None;
+            // });
+                        
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie("Cookies", options => {
+                    options.Cookie.SameSite = SameSiteMode.None;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -84,13 +85,16 @@ namespace LibManagement
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "LibManagement v1"));
             }
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
            // app.UseSession();
             app.UseRouting();
-            app.UseCookiePolicy();
-            app.UseHttpsRedirection();
-            app.UseAuthentication();
+            app.UseCookiePolicy(
+                new CookiePolicyOptions {
+                    Secure = CookieSecurePolicy.Always
+                }
+            );
             app.UseCors(MyAllowSpecificOrigins);
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
