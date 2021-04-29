@@ -19,14 +19,14 @@ namespace LibManagement.Controllers
             _brrd = brrd;
         }
         [HttpGet]
-        //[Authorize(Roles = "Admin,User")]
+        [Authorize(Roles = "Admin,User")]
         public ActionResult<IEnumerable<BookBorrowingRequestDetail>> Get()
         {
             return _brrd.GetAll();
         }
 
         [HttpGet("{id}")]
-        //[Authorize(Roles = "Admin,User")]
+        [Authorize(Roles = "Admin,User")]
         public ActionResult<BookBorrowingRequestDetail> Get(int id)
         {
             return _brrd.GetById(id);
@@ -34,21 +34,21 @@ namespace LibManagement.Controllers
 
 
         [HttpPost]
-        //[Authorize(Roles = "Admin,User")]
+        [Authorize(Roles = "Admin,User")]
         public void Post(BookBorrowingRequestDetail brrd)
         {
             _brrd.Create(brrd);
         }
 
         [HttpPut("{id}")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public void Put(int id, BookBorrowingRequestDetail brrd)
         {
             _brrd.Update(brrd);
         }
 
         [HttpDelete("{id}")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public void Delete(int id)
         {
             _brrd.Delete(id);

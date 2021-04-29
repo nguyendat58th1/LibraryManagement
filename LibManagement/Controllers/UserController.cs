@@ -102,7 +102,7 @@ namespace LibManagement.Controllers
                 };
 
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProperties);
-                return Ok();
+                return Ok(result);
             }
             return BadRequest();
 
@@ -112,6 +112,7 @@ namespace LibManagement.Controllers
         {
             await HttpContext.SignOutAsync(
             CookieAuthenticationDefaults.AuthenticationScheme);
+            
             //HttpContext.Session.Remove("userId");
             return Ok();
         }
